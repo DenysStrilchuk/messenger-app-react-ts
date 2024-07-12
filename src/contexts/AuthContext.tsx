@@ -6,9 +6,9 @@ interface AuthContextProps {
     currentUser: User | null;
 }
 
-export const AuthContext = createContext<AuthContextProps>({ currentUser: null });
+const AuthContext = createContext<AuthContextProps>({ currentUser: null });
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -24,3 +24,5 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         </AuthContext.Provider>
     );
 };
+
+export {AuthContext, AuthProvider};
