@@ -1,6 +1,7 @@
 import React from 'react';
-import {MessageList} from './MessageList';
-import {MessageForm}from './MessageForm';
+
+import { MessageList } from './MessageList';
+import { MessageForm }from './MessageForm';
 
 const Chat: React.FC = () => {
     return (
@@ -11,4 +12,4 @@ const Chat: React.FC = () => {
     );
 };
 
-export {Chat};
+export { Chat };

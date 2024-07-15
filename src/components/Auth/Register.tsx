@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { register } from '../../services/authService';
 
 const Register: React.FC = () => {
@@ -38,4 +39,4 @@ const Register: React.FC = () => {
     );
 };
 
-export {Register};
+export { Register };

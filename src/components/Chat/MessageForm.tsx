@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {sendMessage} from '../../services/chatService';
+import React, { useState } from 'react';
+
+import { sendMessage } from '../../services/chatService';
 
 const MessageForm: React.FC = () => {
     const [text, setText] = useState('');
@@ -29,4 +30,4 @@ const MessageForm: React.FC = () => {
     );
 };
 
-export {MessageForm};
+export { MessageForm };

@@ -25,4 +25,8 @@ const getMessages = () => {
     return query(collection(firestore, 'messages'), orderBy('timestamp'));
 };
 
-export {sendMessage, deleteMessage, getMessages};
+export {
+    sendMessage,
+    deleteMessage,
+    getMessages
+};

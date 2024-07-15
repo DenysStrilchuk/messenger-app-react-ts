@@ -13,4 +13,8 @@ const logout = async () => {
     await getAuth().signOut();
 };
 
-export { register, login, logout };
+export {
+    register,
+    login,
+    logout
+};
