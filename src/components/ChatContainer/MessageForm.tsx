@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
+import {sendMessage} from "../../services";
+import {useAuth} from "../../hooks";
 
-import { sendMessage } from '../../services/chatService';
+interface MessageFormProps {
+    receiverId: string;
+}
 
-const MessageForm: React.FC = () => {
+const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
     const [text, setText] = useState('');
     const [file, setFile] = useState<File | undefined>(undefined);
+    const { currentUser } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await sendMessage(text, file);
+        if (!currentUser) {
+            console.error('User is not authenticated');
+            return;
+        }
+        await sendMessage(text, currentUser.uid, receiverId, file);
         setText('');
         setFile(undefined);
     };
