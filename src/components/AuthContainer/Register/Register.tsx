@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { register } from "../../services";
+import { register } from "../../../services";
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState('');

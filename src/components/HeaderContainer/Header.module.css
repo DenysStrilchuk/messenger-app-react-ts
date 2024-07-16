@@ -13,9 +13,9 @@
 }
 
 .Header a:hover {
-    color: darkorange;
+    color: lightblue;
 }
 
 .Header a[class='active'] {
-    color: red;
+    color: salmon;
 }

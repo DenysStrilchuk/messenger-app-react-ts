@@ -1,7 +1,9 @@
+import {Register} from "../components";
+
 const RegisterPage = () => {
     return (
         <div>
-            RegisterPage
+            <Register/>
         </div>
     );
 };
