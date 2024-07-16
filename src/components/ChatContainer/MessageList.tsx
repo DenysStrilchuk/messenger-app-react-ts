@@ -1,23 +1,29 @@
-import { useEffect, useState } from 'react';
+// src/components/Chat/MessageList.tsx
+import React, { useEffect, useState } from 'react';
 import { deleteMessage, getMessages } from '../../services/chatService';
 import { Message } from './Message';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
 
-const MessageList: React.FC = () => {
+interface MessageListProps {
+    senderId: string;
+    receiverId: string;
+}
+
+const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
     const [messages, setMessages] = useState<any[]>([]);
 
     useEffect(() => {
-        const q = getMessages();
+        const q = getMessages(senderId, receiverId);
         const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<any>) => {
             const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<any>) => ({
                 id: doc.id,
-                ...doc.data()
+                ...doc.data(),
             }));
             setMessages(msgs);
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [senderId, receiverId]);
 
     const handleDelete = async (id: string) => {
         await deleteMessage(id);

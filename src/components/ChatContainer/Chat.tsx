@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Message } from './Message';
 import { MessageForm } from './MessageForm';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
+import { MessageList } from './MessageList';
 import {useAuth} from "../../hooks";
 import {deleteMessage, getMessages} from "../../services";
 
@@ -36,6 +37,9 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
         <div>
             <h2>Chat with {receiver.email}</h2>
             <div>
+                {currentUser && (
+                    <MessageList senderId={currentUser.uid} receiverId={receiver.uid} />
+                )}
                 {messages.map((msg) => (
                     <Message key={msg.id} id={msg.id} text={msg.text} fileUrl={msg.fileUrl} onDelete={handleDeleteMessage} />
                 ))}
