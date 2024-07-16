@@ -1,8 +1,7 @@
-// src/components/Chat/MessageList.tsx
 import React, { useEffect, useState } from 'react';
-import { deleteMessage, getMessages } from '../../services/chatService';
 import { Message } from './Message';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
+import {deleteMessage, getMessages} from "../../services";
 
 interface MessageListProps {
     senderId: string;
