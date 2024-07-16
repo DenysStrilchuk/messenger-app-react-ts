@@ -1,2 +1,3 @@
-export * from './AuthPage';
 export * from './ChatPage';
+export * from './LoginPage';
+export * from './RegisterPage';

@@ -1,0 +1,11 @@
+{
+  "name": "Messenger App",
+  "short_name": "Messenger",
+  "description": "A simple messenger app",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+  ]
+}
