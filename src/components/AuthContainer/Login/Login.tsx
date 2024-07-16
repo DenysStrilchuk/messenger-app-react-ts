@@ -2,17 +2,20 @@ import React, { useState } from 'react';
 
 import {login} from "../../../services";
 import css from './Login.module.css'
+import {useNavigate} from "react-router-dom";
 
 
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await login(email, password);
+            navigate('/chat');
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
