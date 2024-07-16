@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import {login} from "../../../services";
+import css from './Login.module.css'
 
 
 
@@ -22,13 +23,27 @@ const Login: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className={css.loginContainer}>
+        <form onSubmit={handleSubmit} className={css.loginForm}>
             <h2>Login</h2>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-            <button type="submit">Login</button>
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className={css.loginInput}
+            />
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className={css.loginInput}
+            />
+            <button type="submit" className={css.loginButton}>Login</button>
         </form>
+        </div>
     );
 };
 
-export { Login };
+export {Login};

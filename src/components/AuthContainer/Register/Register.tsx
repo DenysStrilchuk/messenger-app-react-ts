@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { register } from "../../../services";
+import css from "./Register.module.css";
 
 const Register: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -20,22 +21,26 @@ const Register: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className={css.registerContainer}>
+        <form onSubmit={handleSubmit} className={css.registerForm}>
             <h2>Register</h2>
             <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
+                className={css.registerInput}
             />
             <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
+                className={css.registerInput}
             />
-            <button type="submit">Register</button>
+            <button type="submit" className={css.registerButton}>Register</button>
         </form>
+        </div>
     );
 };
 
