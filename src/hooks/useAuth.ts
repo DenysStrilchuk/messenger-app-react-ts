@@ -1,9 +1,17 @@
-import { useContext } from 'react';
-
-import { AuthContext } from '../contexts/AuthContext';
+import { useContext, useEffect, useState } from 'react';
+import {AuthContext} from "../contexts";
 
 const useAuth = () => {
-    return useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (currentUser) {
+            currentUser.getIdToken().then(setToken);
+        }
+    }, [currentUser]);
+
+    return { currentUser, token };
 };
 
 export { useAuth };

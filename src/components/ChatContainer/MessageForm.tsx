@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {sendMessage} from "../../services";
-import {useAuth} from "../../hooks";
+import { sendMessage } from '../../services';
+import { useAuth } from '../../hooks';
 
 interface MessageFormProps {
     receiverId: string;
@@ -17,7 +17,11 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
             console.error('User is not authenticated');
             return;
         }
-        await sendMessage(text, currentUser.uid, receiverId, file);
+
+        // Получение токена
+        const token = await currentUser.getIdToken();
+
+        await sendMessage(text, currentUser.uid, receiverId, token, file);
         setText('');
         setFile(undefined);
     };

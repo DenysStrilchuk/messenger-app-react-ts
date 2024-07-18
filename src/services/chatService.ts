@@ -1,8 +1,9 @@
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import { collection, query, where, orderBy, Query } from 'firebase/firestore';
 import { firestore } from '../firebase';
-import axios from "axios";
 
-export const getMessages = (senderId: string, receiverId: string): Query => {
+const getMessages = (senderId: string, receiverId: string): Query => {
     return query(
         collection(firestore, 'messages'),
         where('senderId', 'in', [senderId, receiverId]),
@@ -11,7 +12,7 @@ export const getMessages = (senderId: string, receiverId: string): Query => {
     );
 };
 
-export const sendMessage = async (text: string, senderId: string, receiverId: string, file?: File) => {
+const sendMessage = async (text: string, senderId: string, receiverId: string, token: string, file?: File) => {
     let fileUrl = null;
     if (file) {
         const formData = new FormData();
@@ -20,14 +21,29 @@ export const sendMessage = async (text: string, senderId: string, receiverId: st
         const uploadResponse = await axios.post('/upload', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`,
             },
         });
         fileUrl = uploadResponse.data.url;
     }
 
-    await axios.post('/messages', { text, senderId, receiverId, fileUrl });
+    await axios.post(`${API_BASE_URL}/messages`, { text, senderId, receiverId, fileUrl }, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
 };
 
-export const deleteMessage = async (id: string) => {
-    await axios.delete(`/messages/${id}`);
+const deleteMessage = async (id: string, token: string) => {
+    await axios.delete(`${API_BASE_URL}/messages/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+};
+
+export {
+    getMessages,
+    sendMessage,
+    deleteMessage
 };

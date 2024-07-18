@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUsers } from '../../services';
-import { useAuth } from '../../hooks';
-import {IUser} from '../../types/User';
+import { getUsers } from "../../services";
+import { useAuth } from "../../hooks";
 
 const UsersList: React.FC = () => {
-    const [users, setUsers] = useState<IUser[]>([]);
+    const [users, setUsers] = useState<any[]>([]);
     const navigate = useNavigate();
     const { currentUser } = useAuth();
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const usersList: IUser[] = await getUsers();
-                const filteredUsers = usersList.filter((user: IUser) => user.uid !== currentUser?.uid); // Исключаем текущего пользователя
+                const usersList = await getUsers();
+                const filteredUsers = usersList.filter((user: any) => user.uid !== currentUser?.uid); // Исключаем текущего пользователя
                 setUsers(filteredUsers);
             } catch (error) {
                 console.error('Failed to fetch users:', error);
@@ -31,7 +30,7 @@ const UsersList: React.FC = () => {
         <div>
             <h2>Registered Users</h2>
             <ul>
-                {users.map((user: IUser) => (
+                {users.map((user: any) => (
                     <li key={user.uid} onClick={() => handleUserClick(user.uid)}>
                         {user.email}
                     </li>

@@ -3,8 +3,8 @@ import { Message } from './Message';
 import { MessageForm } from './MessageForm';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
 import { MessageList } from './MessageList';
-import {useAuth} from "../../hooks";
-import {deleteMessage, getMessages} from "../../services";
+import { useAuth } from "../../hooks";
+import { deleteMessage, getMessages } from "../../services";
 
 interface ChatProps {
     receiver: { uid: string; email: string };
@@ -30,7 +30,11 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
     }, [currentUser, receiver]);
 
     const handleDeleteMessage = async (id: string) => {
-        await deleteMessage(id);
+        if (currentUser) {
+            await deleteMessage(id, currentUser.uid);
+        } else {
+            console.error('User is not authenticated');
+        }
     };
 
     return (

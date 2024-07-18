@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Message } from './Message';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
-import {deleteMessage, getMessages} from "../../services";
+import { deleteMessage, getMessages } from '../../services';
 
 interface MessageListProps {
     senderId: string;
@@ -12,7 +12,9 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
     const [messages, setMessages] = useState<any[]>([]);
 
     useEffect(() => {
-        const q = getMessages(senderId, receiverId);
+        if (!senderId || !receiverId) return; // Убедитесь, что оба аргумента переданы
+
+        const q = getMessages(senderId, receiverId); // Передача двух аргументов
         const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<any>) => {
             const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<any>) => ({
                 id: doc.id,
@@ -25,7 +27,8 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
     }, [senderId, receiverId]);
 
     const handleDelete = async (id: string) => {
-        await deleteMessage(id);
+        await deleteMessage(id, senderId);
+        setMessages(messages.filter(msg => msg.id !== id));
     };
 
     return (
