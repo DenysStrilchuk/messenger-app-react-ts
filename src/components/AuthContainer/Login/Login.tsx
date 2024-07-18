@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { login } from '../../../services';
+import { login } from "../../../services";
 import css from './Login.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             await login(email, password);
-            navigate('/users'); // Перенаправляем на страницу пользователей после успешного логина
+            navigate('/users'); // Перенаправлення на сторінку користувачів після успішного входу
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);

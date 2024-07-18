@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
-import { collection, query, where, orderBy, Query } from 'firebase/firestore';
+import { collection, query, where, orderBy,  doc, deleteDoc, Query } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
 const getMessages = (senderId: string, receiverId: string): Query => {
@@ -34,16 +34,13 @@ const sendMessage = async (text: string, senderId: string, receiverId: string, t
     });
 };
 
-const deleteMessage = async (id: string, token: string) => {
-    await axios.delete(`${API_BASE_URL}/messages/${id}`, {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    });
+const deleteMessage = async (id: string, userId: string) => {
+    const messageDoc = doc(firestore, 'messages', id);
+    await deleteDoc(messageDoc);
 };
 
 export {
     getMessages,
     sendMessage,
     deleteMessage
-};
+}

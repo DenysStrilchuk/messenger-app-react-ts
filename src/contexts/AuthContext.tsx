@@ -12,8 +12,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
+            console.log('User state changed:', user); // Додайте це для логування
         });
         return () => unsubscribe();
     }, []);

@@ -17,13 +17,15 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
             console.error('User is not authenticated');
             return;
         }
-
-        // Получение токена
-        const token = await currentUser.getIdToken();
-
-        await sendMessage(text, currentUser.uid, receiverId, token, file);
-        setText('');
-        setFile(undefined);
+        console.log('Current User before sending message:', currentUser); // Добавьте это для логирования
+        try {
+            const token = await currentUser.getIdToken();
+            await sendMessage(text, currentUser.uid, receiverId, token, file);
+            setText('');
+            setFile(undefined);
+        } catch (error) {
+            console.error('Failed to send message:', error);
+        }
     };
 
     return (
