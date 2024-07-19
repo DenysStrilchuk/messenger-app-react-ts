@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { getUsers } from "../../services";
 import { useAuth } from "../../hooks";
 
@@ -12,7 +13,7 @@ const UsersList: React.FC = () => {
         const fetchUsers = async () => {
             try {
                 const usersList = await getUsers();
-                const filteredUsers = usersList.filter((user: any) => user.uid !== currentUser?.uid); // Исключаем текущего пользователя
+                const filteredUsers = usersList.filter((user: any) => user.uid !== currentUser?.uid);
                 setUsers(filteredUsers);
             } catch (error) {
                 console.error('Failed to fetch users:', error);

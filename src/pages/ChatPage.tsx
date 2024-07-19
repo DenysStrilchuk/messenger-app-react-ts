@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Chat } from '../components/ChatContainer/Chat';
-import { getUser } from '../services/userService';
+
+import {Chat} from '../components/ChatContainer/Chat';
+import {getUser} from "../services";
 
 const ChatPage = () => {
     const { receiverId } = useParams<{ receiverId: string }>();

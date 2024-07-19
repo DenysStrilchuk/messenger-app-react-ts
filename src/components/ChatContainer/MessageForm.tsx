@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { sendMessage } from '../../services';
 import { useAuth } from '../../hooks';
 
@@ -17,15 +18,17 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
             console.error('User is not authenticated');
             return;
         }
-        console.log('Current User before sending message:', currentUser); // Добавьте это для логирования
-        try {
-            const token = await currentUser.getIdToken();
-            await sendMessage(text, currentUser.uid, receiverId, token, file);
-            setText('');
-            setFile(undefined);
-        } catch (error) {
-            console.error('Failed to send message:', error);
+        const token = localStorage.getItem('token');
+
+        // Перевіряємо, чи токен не є null
+        if (!token) {
+            console.error('Token is missing');
+            return;
         }
+
+        await sendMessage(text, currentUser.uid, receiverId, token, file);
+        setText('');
+        setFile(undefined);
     };
 
     return (

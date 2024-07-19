@@ -1,14 +1,14 @@
 import { useContext, useEffect } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import {AuthContext} from "../contexts";
 
 const useAuth = () => {
-    const context = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
 
     useEffect(() => {
-        console.log('Current User:', context.currentUser);
-    }, [context.currentUser]);
+        console.log('Current User:', authContext.currentUser);
+    }, [authContext.currentUser]);
 
-    return context;
+    return authContext;
 };
 
 export { useAuth };

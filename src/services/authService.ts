@@ -8,7 +8,7 @@ const register = async (email: string, password: string) => {
 
 const login = async (email: string, password: string) => {
     const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
-    return response.data;
+    return response.data; // Зберігайте токен в localStorage або context API
 };
 
 export {

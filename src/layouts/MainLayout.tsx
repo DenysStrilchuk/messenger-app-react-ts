@@ -1,4 +1,4 @@
-import {Header} from "../components/HeaderContainer";
+import {Header} from "../components";
 import {Outlet} from "react-router-dom";
 
 const MainLayout = () => {

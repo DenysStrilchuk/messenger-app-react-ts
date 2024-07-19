@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
+
 import { Message } from './Message';
 import { MessageForm } from './MessageForm';
-import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
 import { MessageList } from './MessageList';
 import { useAuth } from "../../hooks";
 import { deleteMessage, getMessages } from "../../services";

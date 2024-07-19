@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { login } from "../../../services";
-import css from './Login.module.css';
 import { useNavigate } from "react-router-dom";
+
+import { login } from "../../../services";
+import css from './Login.module.css'
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -11,8 +12,9 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await login(email, password);
-            navigate('/users'); // Перенаправлення на сторінку користувачів після успішного входу
+            const token = await login(email, password);
+            localStorage.setItem('token', token);
+            navigate('/users');
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
