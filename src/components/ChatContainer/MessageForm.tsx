@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-
-import { sendMessage } from '../../services';
-import { useAuth } from '../../hooks';
+import { sendMessage } from "../../services";
+import { useAuth } from "../../hooks";
 
 interface MessageFormProps {
     receiverId: string;
@@ -18,15 +17,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
             console.error('User is not authenticated');
             return;
         }
-        const token = localStorage.getItem('token');
-
-        // Перевіряємо, чи токен не є null
-        if (!token) {
-            console.error('Token is missing');
-            return;
-        }
-
-        await sendMessage(text, currentUser.uid, receiverId, token, file);
+        await sendMessage(text, currentUser.uid, receiverId, file);
         setText('');
         setFile(undefined);
     };

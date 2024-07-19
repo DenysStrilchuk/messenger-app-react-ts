@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-
 import { login } from "../../../services";
 import css from './Login.module.css'
+import { useNavigate } from "react-router-dom";
+import {useAuth} from "../../../hooks";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { loginWithToken } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const token = await login(email, password);
-            localStorage.setItem('token', token);
-            navigate('/users');
+            await loginWithToken(token); // Логін через Firebase з отриманим токеном
+            navigate('/users'); // Перенаправляем на страницу пользователей после успешного логина
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);

@@ -32,7 +32,7 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
 
     const handleDeleteMessage = async (id: string) => {
         if (currentUser) {
-            await deleteMessage(id, currentUser.uid);
+            await deleteMessage(id);
         } else {
             console.error('User is not authenticated');
         }

@@ -28,7 +28,7 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
     }, [senderId, receiverId]);
 
     const handleDelete = async (id: string) => {
-        await deleteMessage(id, senderId);
+        await deleteMessage(id);
         setMessages(messages.filter(msg => msg.id !== id));
     };
 

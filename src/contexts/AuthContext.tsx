@@ -1,12 +1,13 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
+import { User, onAuthStateChanged, signInWithCustomToken } from 'firebase/auth';
 import { auth } from '../firebase';
 
 interface AuthContextProps {
     currentUser: User | null;
+    loginWithToken: (token: string) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextProps>({ currentUser: null });
+const AuthContext = createContext<AuthContextProps>({ currentUser: null, loginWithToken: async () => {} });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -19,11 +20,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         return () => unsubscribe();
     }, []);
 
+    const loginWithToken = async (token: string) => {
+        await signInWithCustomToken(auth, token);
+    };
+
     return (
-        <AuthContext.Provider value={{ currentUser }}>
+        <AuthContext.Provider value={{ currentUser, loginWithToken }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export { AuthContext, AuthProvider };
+export {
+    AuthContext,
+    AuthProvider
+};
