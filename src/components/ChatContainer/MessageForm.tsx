@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { sendMessage } from "../../services";
-import { useAuth } from "../../hooks";
+import { useAuth } from '../../hooks';
+import {sendMessage} from "../../services";
 
 interface MessageFormProps {
     receiverId: string;
@@ -17,7 +17,8 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
             console.error('User is not authenticated');
             return;
         }
-        await sendMessage(text, currentUser.uid, receiverId, file);
+        const token = await currentUser.getIdToken(); // Отримати токен аутентифікації Firebase
+        await sendMessage(text, currentUser.uid, receiverId, token, file);
         setText('');
         setFile(undefined);
     };

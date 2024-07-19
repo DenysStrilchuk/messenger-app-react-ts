@@ -1,6 +1,7 @@
-import { collection, query, where, orderBy, Query, addDoc, Timestamp, doc, deleteDoc } from 'firebase/firestore';
-import { firestore, storage } from '../firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
+import { collection, query, where, orderBy, Query, doc, deleteDoc } from 'firebase/firestore';
+import { firestore } from '../firebase';
 
 const getMessages = (senderId: string, receiverId: string): Query => {
     return query(
@@ -11,29 +12,35 @@ const getMessages = (senderId: string, receiverId: string): Query => {
     );
 };
 
-const sendMessage = async (text: string, senderId: string, receiverId: string, file?: File) => {
+const sendMessage = async (text: string, senderId: string, receiverId: string, token: string, file?: File) => {
     let fileUrl = null;
     if (file) {
-        const storageRef = ref(storage, `files/${file.name}`);
-        await uploadBytes(storageRef, file);
-        fileUrl = await getDownloadURL(storageRef);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const uploadResponse = await axios.post('/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        fileUrl = uploadResponse.data.url;
     }
 
-    await addDoc(collection(firestore, 'messages'), {
-        text,
-        senderId,
-        receiverId,
-        fileUrl,
-        timestamp: Timestamp.now(),
+    await axios.post(`${API_BASE_URL}/messages`, { text, senderId, receiverId, fileUrl }, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
     });
 };
 
 const deleteMessage = async (id: string) => {
-    await deleteDoc(doc(firestore, 'messages', id));
+    const messageDoc = doc(firestore, 'messages', id);
+    await deleteDoc(messageDoc);
 };
 
 export {
     getMessages,
     sendMessage,
     deleteMessage
-}
+};

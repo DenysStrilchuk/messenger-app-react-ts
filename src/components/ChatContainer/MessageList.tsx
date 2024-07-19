@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
+import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot, FirestoreError } from 'firebase/firestore';
 
 import { Message } from './Message';
 import { deleteMessage, getMessages } from '../../services';
@@ -11,18 +11,29 @@ interface MessageListProps {
 
 const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
     const [messages, setMessages] = useState<any[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (!senderId || !receiverId) return;
 
         const q = getMessages(senderId, receiverId);
-        const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<any>) => {
-            const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<any>) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setMessages(msgs);
-        });
+        const unsubscribe = onSnapshot(q,
+            (snapshot: QuerySnapshot<any>) => {
+                const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<any>) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setMessages(msgs);
+            },
+            (error: FirestoreError) => {
+                if (error.code === 'failed-precondition') {
+                    setError('Індекс створюється. Будь ласка, спробуйте пізніше.');
+                } else {
+                    setError('Сталася помилка під час завантаження повідомлень.');
+                }
+                console.error(error);
+            }
+        );
 
         return () => unsubscribe();
     }, [senderId, receiverId]);
@@ -31,6 +42,10 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
         await deleteMessage(id);
         setMessages(messages.filter(msg => msg.id !== id));
     };
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     return (
         <div>

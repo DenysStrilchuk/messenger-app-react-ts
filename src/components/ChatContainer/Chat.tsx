@@ -4,8 +4,8 @@ import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/fires
 import { Message } from './Message';
 import { MessageForm } from './MessageForm';
 import { MessageList } from './MessageList';
-import { useAuth } from "../../hooks";
-import { deleteMessage, getMessages } from "../../services";
+import { useAuth } from '../../hooks';
+import { deleteMessage, getMessages } from '../../services';
 
 interface ChatProps {
     receiver: { uid: string; email: string };
