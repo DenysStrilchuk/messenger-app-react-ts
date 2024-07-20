@@ -5,7 +5,7 @@ import { Message } from './Message';
 import { MessageForm } from './MessageForm';
 import { MessageList } from './MessageList';
 import { useAuth } from '../../hooks';
-import { deleteMessage, getMessages } from '../../services';
+import { deleteMessage, getMessages, updateMessage } from '../../services';
 
 interface ChatProps {
     receiver: { uid: string; email: string };
@@ -14,6 +14,7 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ receiver }) => {
     const { currentUser } = useAuth();
     const [messages, setMessages] = useState<any[]>([]);
+    const [editingMessage, setEditingMessage] = useState<any | null>(null);
 
     useEffect(() => {
         if (!currentUser) return;
@@ -38,18 +39,37 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
         }
     };
 
+    const handleEditMessage = (message: any) => {
+        setEditingMessage(message);
+    };
+
+    const handleUpdateMessage = async (id: string, newText: string) => {
+        if (currentUser) {
+            await updateMessage(id, newText);
+            setEditingMessage(null);
+        } else {
+            console.error('User is not authenticated');
+        }
+    };
+
     return (
         <div>
             <h2>Chat with {receiver.email}</h2>
             <div>
                 {currentUser && (
-                    <MessageList senderId={currentUser.uid} receiverId={receiver.uid} />
+                    <MessageList
+                        senderId={currentUser.uid}
+                        receiverId={receiver.uid}
+                        onDelete={handleDeleteMessage}
+                        onEdit={handleEditMessage}
+                    />
                 )}
-                {messages.map((msg) => (
-                    <Message key={msg.id} id={msg.id} text={msg.text} fileUrl={msg.fileUrl} onDelete={handleDeleteMessage} />
-                ))}
             </div>
-            <MessageForm receiverId={receiver.uid} />
+            <MessageForm
+                receiverId={receiver.uid}
+                editingMessage={editingMessage}
+                onUpdateMessage={handleUpdateMessage}
+            />
         </div>
     );
 };

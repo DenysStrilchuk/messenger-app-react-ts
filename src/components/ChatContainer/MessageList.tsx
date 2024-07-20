@@ -7,9 +7,11 @@ import { deleteMessage, getMessages } from '../../services';
 interface MessageListProps {
     senderId: string;
     receiverId: string;
+    onDelete: (id: string) => void;
+    onEdit: (message: any) => void;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
+const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId, onDelete, onEdit }) => {
     const [messages, setMessages] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -38,11 +40,6 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
         return () => unsubscribe();
     }, [senderId, receiverId]);
 
-    const handleDelete = async (id: string) => {
-        await deleteMessage(id);
-        setMessages(messages.filter(msg => msg.id !== id));
-    };
-
     if (error) {
         return <div>{error}</div>;
     }
@@ -50,7 +47,14 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId }) => {
     return (
         <div>
             {messages.map((msg: any) => (
-                <Message key={msg.id} id={msg.id} text={msg.text} fileUrl={msg.fileUrl} onDelete={handleDelete} />
+                <Message
+                    key={msg.id}
+                    id={msg.id}
+                    text={msg.text}
+                    fileUrl={msg.fileUrl}
+                    onDelete={() => onDelete(msg.id)}
+                    onEdit={() => onEdit(msg)}
+                />
             ))}
         </div>
     );

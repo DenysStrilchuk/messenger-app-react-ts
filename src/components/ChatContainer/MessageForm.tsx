@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { sendMessage } from '../../services/chatService';
 import { useAuth } from '../../hooks';
-import {sendMessage} from "../../services";
 
 interface MessageFormProps {
     receiverId: string;
+    editingMessage?: any;
+    onUpdateMessage: (id: string, newText: string) => void;
 }
 
-const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
+const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, onUpdateMessage }) => {
     const [text, setText] = useState('');
     const [file, setFile] = useState<File | undefined>(undefined);
     const { currentUser } = useAuth();
+
+    useEffect(() => {
+        if (editingMessage) {
+            setText(editingMessage.text);
+        }
+    }, [editingMessage]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,7 +26,13 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
             return;
         }
         const token = await currentUser.getIdToken(); // Отримати токен аутентифікації Firebase
-        await sendMessage(text, currentUser.uid, receiverId, token, file);
+
+        if (editingMessage) {
+            await onUpdateMessage(editingMessage.id, text);
+        } else {
+            await sendMessage(text, currentUser.uid, receiverId, token, file);
+        }
+
         setText('');
         setFile(undefined);
     };
@@ -35,7 +49,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId }) => {
                 type="file"
                 onChange={(e) => setFile(e.target.files ? e.target.files[0] : undefined)}
             />
-            <button type="submit">Send</button>
+            <button type="submit">{editingMessage ? 'Update' : 'Send'}</button>
         </form>
     );
 };

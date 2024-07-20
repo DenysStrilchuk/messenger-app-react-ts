@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
-import { collection, query, where, orderBy, Query, doc, deleteDoc } from 'firebase/firestore';
+import { collection, query, where, orderBy, Query, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
 const getMessages = (senderId: string, receiverId: string): Query => {
@@ -39,8 +39,14 @@ const deleteMessage = async (id: string) => {
     await deleteDoc(messageDoc);
 };
 
+const updateMessage = async (id: string, newText: string) => {
+    const messageDoc = doc(firestore, 'messages', id);
+    await updateDoc(messageDoc, { text: newText });
+};
+
 export {
     getMessages,
     sendMessage,
-    deleteMessage
+    deleteMessage,
+    updateMessage
 };
