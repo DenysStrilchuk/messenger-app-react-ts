@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { sendMessage } from '../../services/chatService';
 import { useAuth } from '../../hooks';
+import {sendMessage} from "../../services";
 
 interface MessageFormProps {
     receiverId: string;
