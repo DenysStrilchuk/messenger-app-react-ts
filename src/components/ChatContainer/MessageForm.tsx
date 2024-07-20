@@ -28,7 +28,7 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, o
         const token = await currentUser.getIdToken(); // Отримати токен аутентифікації Firebase
 
         if (editingMessage) {
-            await onUpdateMessage(editingMessage.id, text);
+            onUpdateMessage(editingMessage.id, text);
         } else {
             await sendMessage(text, currentUser.uid, receiverId, token, file);
         }
