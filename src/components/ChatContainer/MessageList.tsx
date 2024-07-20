@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot, FirestoreError } from 'firebase/firestore';
 
 import { Message } from './Message';
-import { deleteMessage, getMessages } from '../../services';
+import { getMessages } from '../../services';
 
 interface MessageListProps {
     senderId: string;
