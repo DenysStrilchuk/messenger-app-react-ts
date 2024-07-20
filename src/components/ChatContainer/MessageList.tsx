@@ -51,7 +51,7 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId, onDelet
                     key={msg.id}
                     id={msg.id}
                     text={msg.text}
-                    fileUrl={msg.fileUrl}
+                    fileUrls={msg.fileUrls}
                     onDelete={() => onDelete(msg.id)}
                     onEdit={() => onEdit(msg)}
                 />

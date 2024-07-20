@@ -1,4 +1,4 @@
-import { collection, query, where, orderBy, Query, addDoc, doc, deleteDoc,  updateDoc, Timestamp } from 'firebase/firestore';
+import { collection, query, where, orderBy, Query, addDoc, doc, deleteDoc, updateDoc, Timestamp } from 'firebase/firestore';
 import { firestore, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -11,19 +11,20 @@ const getMessages = (senderId: string, receiverId: string): Query => {
     );
 };
 
-const sendMessage = async (text: string, senderId: string, receiverId: string, token: string, file?: File) => {
-    let fileUrl = null;
-    if (file) {
+const sendMessage = async (text: string, senderId: string, receiverId: string, token: string, files: File[] = []) => {
+    const fileUrls = [];
+    for (const file of files) {
         const storageRef = ref(storage, `files/${file.name}`);
         await uploadBytes(storageRef, file);
-        fileUrl = await getDownloadURL(storageRef);
+        const fileUrl = await getDownloadURL(storageRef);
+        fileUrls.push(fileUrl);
     }
 
     await addDoc(collection(firestore, 'messages'), {
         text,
         senderId,
         receiverId,
-        fileUrl,
+        fileUrls,
         timestamp: Timestamp.now(),
     });
 };

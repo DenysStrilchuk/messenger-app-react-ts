@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { sendMessage } from '../../services/chatService';
 import { useAuth } from '../../hooks';
-import {sendMessage} from "../../services";
 
 interface MessageFormProps {
     receiverId: string;
@@ -10,7 +10,7 @@ interface MessageFormProps {
 
 const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, onUpdateMessage }) => {
     const [text, setText] = useState('');
-    const [file, setFile] = useState<File | undefined>(undefined);
+    const [files, setFiles] = useState<File[]>([]);
     const { currentUser } = useAuth();
 
     useEffect(() => {
@@ -19,22 +19,28 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, o
         }
     }, [editingMessage]);
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            setFiles(Array.from(e.target.files));
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!currentUser) {
             console.error('User is not authenticated');
             return;
         }
-        const token = await currentUser.getIdToken(); // Отримати токен аутентифікації Firebase
+        const token = await currentUser.getIdToken();
 
         if (editingMessage) {
             onUpdateMessage(editingMessage.id, text);
         } else {
-            await sendMessage(text, currentUser.uid, receiverId, token, file);
+            await sendMessage(text, currentUser.uid, receiverId, token, files);
         }
 
         setText('');
-        setFile(undefined);
+        setFiles([]);
     };
 
     return (
@@ -47,7 +53,8 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, o
             />
             <input
                 type="file"
-                onChange={(e) => setFile(e.target.files ? e.target.files[0] : undefined)}
+                multiple
+                onChange={handleFileChange}
             />
             <button type="submit">{editingMessage ? 'Update' : 'Send'}</button>
         </form>
