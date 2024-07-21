@@ -60,7 +60,7 @@ const Login: React.FC = () => {
             </form>
             {showModal && (
                 <Modal
-                    message="Ви не зареєстрований користувач. Зареєструватися?"
+                    message="You are not a registered user. Register?"
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
                 />
