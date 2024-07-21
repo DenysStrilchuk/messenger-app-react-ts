@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
 
-import { MessageForm } from './MessageForm';
-import { MessageList } from './MessageList';
-import { useAuth } from '../../hooks';
-import { deleteMessage, getMessages, updateMessage } from '../../services';
+import { useAuth } from '../../../hooks';
+import { deleteMessage, getMessages, updateMessage } from '../../../services';
+import {MessageList} from "../MessageList";
+import {MessageForm} from "../MessageForm";
+import css from './Chat.module.css';
 
 interface ChatProps {
     receiver: { uid: string; email: string };
@@ -52,9 +53,9 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
     };
 
     return (
-        <div>
-            <h2>Chat with {receiver.email}</h2>
-            <div>
+        <div className={css.chatContainer}>
+            <h2 className={css.chatHeader}>Chat with {receiver.email}</h2>
+            <div className={css.chatMessages}>
                 {currentUser && (
                     <MessageList
                         senderId={currentUser.uid}

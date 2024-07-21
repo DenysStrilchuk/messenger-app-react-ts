@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { sendMessage } from '../../services/chatService';
-import { useAuth } from '../../hooks';
+
+import { useAuth } from '../../../hooks';
+import {sendMessage} from "../../../services";
+import css from './MessageForm.module.css';
 
 interface MessageFormProps {
     receiverId: string;
@@ -44,19 +46,20 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, o
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={css.messageForm}>
             <input
                 type="text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="New message"
+                className={css.messageFileInput}
             />
             <input
                 type="file"
                 multiple
                 onChange={handleFileChange}
             />
-            <button type="submit">{editingMessage ? 'Update' : 'Send'}</button>
+            <button type="submit" className={css.messageSendButton}>{editingMessage ? 'Update' : 'Send'}</button>
         </form>
     );
 };

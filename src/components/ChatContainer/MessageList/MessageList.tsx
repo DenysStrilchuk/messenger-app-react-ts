@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot, FirestoreError } from 'firebase/firestore';
 
-import { Message } from './Message';
-import { getMessages } from '../../services';
+import {Message} from "../Message";
+import {useAuth} from "../../../hooks";
+import {getMessages} from "../../../services";
 
 interface MessageListProps {
     senderId: string;
@@ -14,6 +15,7 @@ interface MessageListProps {
 const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId, onDelete, onEdit }) => {
     const [messages, setMessages] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const { currentUser } = useAuth();
 
     useEffect(() => {
         if (!senderId || !receiverId) return;
@@ -52,6 +54,8 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId, onDelet
                     id={msg.id}
                     text={msg.text}
                     fileUrls={msg.fileUrls}
+                    senderId={msg.senderId}
+                    currentUserUid={currentUser ? currentUser.uid : null}
                     onDelete={() => onDelete(msg.id)}
                     onEdit={() => onEdit(msg)}
                 />

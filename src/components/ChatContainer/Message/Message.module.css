@@ -1,0 +1,52 @@
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
+
+.owner {
+    align-self: flex-end;
+    background-color: #e0f7fa;
+    text-align: right;
+}
+
+.message:not(.owner) {
+    align-self: flex-start;
+    background-color: #f0f0f0;
+}
+
+.messageText {
+    margin: 0 0 5px;
+}
+
+.messageFile {
+    color: dodgerblue;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.messageActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.messageActions button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    font-size: 14px;
+}
+
+.messageActions button:hover {
+    text-decoration: underline;
+}

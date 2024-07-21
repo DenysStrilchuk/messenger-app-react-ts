@@ -1,4 +1,4 @@
-import {ChatInfo} from "../components/ChatContainer/ChatInfo";
+import {ChatInfo} from "../components/ChatContainer/ChatInfo/ChatInfo";
 
 const ChatPage = () => {
     return (
