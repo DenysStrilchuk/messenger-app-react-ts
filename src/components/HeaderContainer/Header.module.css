@@ -1,21 +1,42 @@
 .Header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    height: 50px;
-    background-color: dodgerblue;
+    padding: 10px 20px;
+    background-color: #282c34;
+    color: #fff;
+    border-bottom: 2px solid #61dafb;
+}
+
+.Header h1 {
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: bold;
 }
 
 .Header a {
+    color: #61dafb;
     text-decoration: none;
-    color: snow;
-    font-size: 25px;
+    font-size: 1rem;
+    margin: 0 10px;
+    transition: color 0.3s ease;
 }
 
 .Header a:hover {
-    color: lightblue;
+    color: #21a1f1;
 }
 
-.Header a[class='active'] {
-    color: salmon;
+.Header span {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-left: 20px;
+}
+
+.userEmail {
+    background-color: #61dafb;
+    color: #282c34;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
 }

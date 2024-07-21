@@ -14,14 +14,18 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
+            console.log('User state changed in AuthProvider:', user);
             setCurrentUser(user);
-            console.log('User state changed:', user);
         });
         return () => unsubscribe();
     }, []);
 
     const loginWithToken = async (token: string) => {
-        await signInWithCustomToken(auth, token);
+        try {
+            await signInWithCustomToken(auth, token);
+        } catch (error) {
+            console.error('Error during sign-in:', error);
+        }
     };
 
     return (
@@ -31,7 +35,4 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export {
-    AuthContext,
-    AuthProvider
-};
+export { AuthContext, AuthProvider };
