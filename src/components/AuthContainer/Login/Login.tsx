@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import css from './Login.module.css';
 import { login } from "../../../services";
-import css from './Login.module.css'
-import { useNavigate } from "react-router-dom";
-import {useAuth} from "../../../hooks";
+import { useAuth } from "../../../hooks";
+import {Modal} from "../../ModalWindowContainer";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const { loginWithToken } = useAuth();
 
@@ -14,15 +16,26 @@ const Login: React.FC = () => {
         e.preventDefault();
         try {
             const token = await login(email, password);
-            await loginWithToken(token); // Логін через Firebase з отриманим токеном
-            navigate('/users'); // Перенаправляем на страницу пользователей после успешного логина
+            await loginWithToken(token);
+            navigate('/users');
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
+                setShowModal(true);
             } else {
                 console.error('Unexpected error', error);
+                setShowModal(true);
             }
         }
+    };
+
+    const handleConfirm = () => {
+        setShowModal(false);
+        navigate('/registration'); // Перенаправлення на сторінку реєстрації
+    };
+
+    const handleCancel = () => {
+        setShowModal(false);
     };
 
     return (
@@ -45,6 +58,13 @@ const Login: React.FC = () => {
                 />
                 <button type="submit" className={css.loginButton}>Login</button>
             </form>
+            {showModal && (
+                <Modal
+                    message="Ви не зареєстрований користувач. Зареєструватися?"
+                    onConfirm={handleConfirm}
+                    onCancel={handleCancel}
+                />
+            )}
         </div>
     );
 };
