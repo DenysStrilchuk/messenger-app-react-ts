@@ -13,8 +13,8 @@ const Modal: React.FC<ModalProps> = ({ message, onConfirm, onCancel }) => {
             <div className={css.modalContent}>
                 <p>{message}</p>
                 <div className={css.modalActions}>
-                    <button onClick={onConfirm}>Так</button>
-                    <button onClick={onCancel}>Ні</button>
+                    <button onClick={onConfirm}>Yes</button>
+                    <button onClick={onCancel}>No</button>
                 </div>
             </div>
         </div>
