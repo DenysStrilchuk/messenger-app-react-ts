@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import css from './Login.module.css';
 import { login } from "../../../services";
 import { useAuth } from "../../../hooks";
-import {Modal} from "../../ModalWindowContainer";
+import { Modal } from "../../ModalWindowContainer";
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
