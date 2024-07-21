@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUsers } from "../../services";
 import { useAuth } from "../../hooks";
 import css from './UsersList.module.css';
+import {IUser} from "../../types/User";
 
 const UsersList: React.FC = () => {
     const [users, setUsers] = useState<any[]>([]);
@@ -32,7 +33,7 @@ const UsersList: React.FC = () => {
         <div className={css.usersContainer}>
             <h2 className={css.usersList}>Registered Users</h2>
             <ul>
-                {users.map((user: any) => (
+                {users.map((user: IUser) => (
                     <li key={user.uid} onClick={() => handleUserClick(user.uid)}>
                         <p>{user.email}</p>
                         <button>Chat</button>

@@ -12,7 +12,7 @@ const Register: React.FC = () => {
         e.preventDefault();
         try {
             await register(email, password);
-            navigate('/users'); // Перенаправлення на сторінку користувачів після успішної реєстрації
+            navigate('/users');
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);
