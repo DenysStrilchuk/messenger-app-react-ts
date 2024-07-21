@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot } from 'firebase/firestore';
 
 import { useAuth } from '../../../hooks';
 import { deleteMessage, getMessages, updateMessage } from '../../../services';
 import css from './Chat.module.css';
-import {MessageForm} from "../MessageForm";
-import {MessageList} from "../MessageList";
+import { MessageForm } from "../MessageForm";
+import { MessageList } from "../MessageList";
 
 interface ChatProps {
     receiver: { uid: string; email: string };
@@ -15,6 +16,7 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
     const { currentUser } = useAuth();
     const [messages, setMessages] = useState<any[]>([]);
     const [editingMessage, setEditingMessage] = useState<any | null>(null);
+    const navigate = useNavigate(); // Ініціалізуємо useNavigate
 
     useEffect(() => {
         if (!currentUser) return;
@@ -52,8 +54,13 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
         }
     };
 
+    const handleBackClick = () => {
+        navigate(-1); // Повертає на попередню сторінку
+    };
+
     return (
         <div className={css.chatContainer}>
+            <button className={css.backButton} onClick={handleBackClick}>Back</button>
             <h2 className={css.chatHeader}>Chat with {receiver.email}</h2>
             <div className={css.chatMessages}>
                 {currentUser && (
@@ -74,4 +81,4 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
     );
 };
 
-export {Chat};
+export { Chat };

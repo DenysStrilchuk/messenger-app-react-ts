@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import css from './Register.module.css';
 import { register } from "../../../services";
 
@@ -12,7 +13,7 @@ const Register: React.FC = () => {
         e.preventDefault();
         try {
             await register(email, password);
-            navigate('/users');
+            navigate('/login');
         } catch (error) {
             if (error instanceof Error) {
                 console.error(error.message);

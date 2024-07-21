@@ -2,41 +2,54 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: #282c34;
-    color: #fff;
-    border-bottom: 2px solid #61dafb;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ccc;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .Header h1 {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
     cursor: pointer;
     font-size: 1.5rem;
-    margin: 0;
-    font-weight: bold;
 }
 
-.Header a {
-    color: #61dafb;
+.NavLink {
     text-decoration: none;
+    color: #007bff;
+    margin: 0 15px;
     font-size: 1rem;
-    margin: 0 10px;
-    transition: color 0.3s ease;
+    transition: color 0.3s;
 }
 
-.Header a:hover {
-    color: #21a1f1;
-}
-
-.Header span {
-    font-size: 1rem;
-    font-weight: normal;
-    margin-left: 20px;
+.NavLink:hover {
+    color: #0056b3;
 }
 
 .userEmail {
-    background-color: #61dafb;
-    color: #282c34;
-    padding: 5px 10px;
+    margin-right: 20px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.logoutButton {
+    padding: 0.5rem 1rem;
+    border: none;
     border-radius: 5px;
-    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logoutButton:hover {
+    background-color: #0056b3;
+}
+
+.loadingText {
+    font-size: 1rem;
+    color: #333;
 }

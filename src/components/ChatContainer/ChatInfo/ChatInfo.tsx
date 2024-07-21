@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import {Chat} from "../Chat/Chat";
+import {Chat} from "../Chat";
 import {getUser} from "../../../services";
 
 const ChatInfo = () => {

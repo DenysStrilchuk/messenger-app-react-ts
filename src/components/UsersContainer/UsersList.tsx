@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { getUsers } from "../../services";
 import { useAuth } from "../../hooks";
 import css from './UsersList.module.css';
