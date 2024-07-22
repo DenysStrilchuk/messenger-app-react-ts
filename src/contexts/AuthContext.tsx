@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { User, onAuthStateChanged, signInWithCustomToken, signOut as firebaseSignOut } from 'firebase/auth';
+import { User, onAuthStateChanged, signInWithCustomToken } from 'firebase/auth';
 import { auth } from '../firebase';
+
+import { logout as authServiceLogout } from '../services/authService';
 
 interface AuthContextProps {
     currentUser: User | null;
@@ -30,7 +32,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const logout = async () => {
         try {
-            await firebaseSignOut(auth);
+            await authServiceLogout();
         } catch (error) {
             console.error('Error signing out:', error);
         }

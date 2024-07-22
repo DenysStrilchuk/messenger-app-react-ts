@@ -4,6 +4,7 @@ import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot, FirestoreError } from
 import {Message} from "../Message";
 import {useAuth} from "../../../hooks";
 import {getMessages} from "../../../services";
+import {IMessage} from "../../../types/Message";
 
 interface MessageListProps {
     senderId: string;
@@ -13,7 +14,7 @@ interface MessageListProps {
 }
 
 const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId, onDelete, onEdit }) => {
-    const [messages, setMessages] = useState<any[]>([]);
+    const [messages, setMessages] = useState<IMessage[]>([]);
     const [error, setError] = useState<string | null>(null);
     const { currentUser } = useAuth();
 
@@ -23,17 +24,17 @@ const MessageList: React.FC<MessageListProps> = ({ senderId, receiverId, onDelet
         const q = getMessages(senderId, receiverId);
         const unsubscribe = onSnapshot(q,
             (snapshot: QuerySnapshot<any>) => {
-                const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<any>) => ({
-                    id: doc.id,
+                const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<IMessage>) => ({
                     ...doc.data(),
+                    id: doc.id
                 }));
                 setMessages(msgs);
             },
             (error: FirestoreError) => {
                 if (error.code === 'failed-precondition') {
-                    setError('Індекс створюється. Будь ласка, спробуйте пізніше.');
+                    setError('The index is being created. Please try again later.');
                 } else {
-                    setError('Сталася помилка під час завантаження повідомлень.');
+                    setError('An error occurred while loading messages.');
                 }
                 console.error(error);
             }

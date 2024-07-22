@@ -27,7 +27,7 @@ const UsersList: React.FC = () => {
             }
         };
 
-        fetchUsers();
+        void fetchUsers();
     }, [currentUser]);
 
     const handleUserClick = (userId: string) => {

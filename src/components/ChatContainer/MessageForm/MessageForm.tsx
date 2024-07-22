@@ -34,12 +34,11 @@ const MessageForm: React.FC<MessageFormProps> = ({ receiverId, editingMessage, o
             console.error('User is not authenticated');
             return;
         }
-        const token = await currentUser.getIdToken();
 
         if (editingMessage) {
             onUpdateMessage(editingMessage.id, text);
         } else {
-            await sendMessage(text, currentUser.uid, receiverId, token, files);
+            await sendMessage(text, currentUser.uid, receiverId, files);
         }
 
         setText('');

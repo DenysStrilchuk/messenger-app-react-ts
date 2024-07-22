@@ -13,7 +13,7 @@ const getMessages = (senderId: string, receiverId: string): Query<IMessage> => {
     );
 };
 
-const sendMessage = async (text: string, senderId: string, receiverId: string, token: string, files: File[] = []) => {
+const sendMessage = async (text: string, senderId: string, receiverId: string, files: File[] = []) => {
     const fileUrls = [];
     for (const file of files) {
         const storageRef = ref(storage, `files/${file.name}`);
