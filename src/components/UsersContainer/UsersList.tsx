@@ -19,8 +19,6 @@ const UsersList: React.FC = () => {
                 }
 
                 const usersList = await getUsers();
-                console.log('Fetched Users:', usersList);
-                console.log('Current User:', currentUser);
 
                 const filteredUsers = usersList.filter((user: IUser) => user.uid !== currentUser.uid);
                 setUsers(filteredUsers);
