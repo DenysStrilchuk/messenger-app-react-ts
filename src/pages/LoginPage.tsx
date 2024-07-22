@@ -1,4 +1,4 @@
-import {Login} from "../components/AuthContainer/Login/Login";
+import { Login } from "../components/AuthContainer/Login/Login";
 
 
 const LoginPage = () => {
@@ -9,4 +9,4 @@ const LoginPage = () => {
     );
 };
 
-export {LoginPage};
+export { LoginPage };

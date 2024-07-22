@@ -1,4 +1,4 @@
-import {UsersList} from "../components";
+import { UsersList } from "../components";
 
 const UsersPage = () => {
     return (
@@ -8,4 +8,4 @@ const UsersPage = () => {
     );
 };
 
-export {UsersPage};
+export { UsersPage };

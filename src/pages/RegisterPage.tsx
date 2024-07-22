@@ -1,4 +1,4 @@
-import {Register} from "../components/AuthContainer/Register/Register";
+import { Register } from "../components/AuthContainer/Register/Register";
 
 const RegisterPage = () => {
     return (
@@ -8,4 +8,4 @@ const RegisterPage = () => {
     );
 };
 
-export {RegisterPage};
+export { RegisterPage };

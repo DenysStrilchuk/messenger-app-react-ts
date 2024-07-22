@@ -33,4 +33,4 @@ const Message: React.FC<MessageProps> = ({ id, text, fileUrls, senderId, current
     );
 };
 
-export {Message};
+export { Message };

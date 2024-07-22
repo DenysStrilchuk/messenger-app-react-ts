@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { onSnapshot, QuerySnapshot, QueryDocumentSnapshot, FirestoreError } from 'firebase/firestore';
 
-import {Message} from "../Message";
-import {useAuth} from "../../../hooks";
-import {getMessages} from "../../../services";
-import {IMessage} from "../../../types/Message";
+import { Message } from "../Message";
+import { useAuth } from "../../../hooks";
+import { getMessages } from "../../../services";
+import { IMessage } from "../../../types/Message";
 
 interface MessageListProps {
     senderId: string;

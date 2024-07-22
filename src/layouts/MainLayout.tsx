@@ -1,6 +1,6 @@
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-import {Header} from "../components";
+import { Header } from "../components";
 
 const MainLayout = () => {
     return (
@@ -11,4 +11,4 @@ const MainLayout = () => {
     );
 };
 
-export {MainLayout};
+export { MainLayout };

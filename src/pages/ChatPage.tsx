@@ -1,4 +1,4 @@
-import {ChatInfo} from "../components/ChatContainer/ChatInfo/ChatInfo";
+import { ChatInfo } from "../components/ChatContainer/ChatInfo/ChatInfo";
 
 const ChatPage = () => {
     return (
@@ -8,4 +8,4 @@ const ChatPage = () => {
     );
 };
 
-export {ChatPage};
+export { ChatPage };
