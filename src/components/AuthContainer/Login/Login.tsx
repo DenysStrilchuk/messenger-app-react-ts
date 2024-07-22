@@ -32,7 +32,7 @@ const Login: React.FC = () => {
 
     const handleConfirm = () => {
         setShowModal(false);
-        navigate('/registration'); // Перенаправлення на сторінку реєстрації
+        navigate('/registration');
     };
 
     const handleCancel = () => {

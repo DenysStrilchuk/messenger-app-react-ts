@@ -20,7 +20,7 @@ const ChatInfo = () => {
             }
         };
 
-        fetchReceiver();
+        void fetchReceiver();
     }, [receiverId]);
 
     if (!receiver) {

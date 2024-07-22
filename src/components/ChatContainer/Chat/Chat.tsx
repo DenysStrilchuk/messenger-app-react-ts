@@ -55,7 +55,7 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
     };
 
     const handleBackClick = () => {
-        navigate(-1); // Повертає на попередню сторінку
+        navigate(-1);
     };
 
     return (
