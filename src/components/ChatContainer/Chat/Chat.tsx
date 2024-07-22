@@ -7,6 +7,7 @@ import { deleteMessage, getMessages, updateMessage } from '../../../services';
 import css from './Chat.module.css';
 import { MessageForm } from "../MessageForm";
 import { MessageList } from "../MessageList";
+import { IMessage } from '../../../types/Message';
 
 interface ChatProps {
     receiver: { uid: string; email: string };
@@ -14,19 +15,22 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ receiver }) => {
     const { currentUser } = useAuth();
-    const [messages, setMessages] = useState<any[]>([]);
-    const [editingMessage, setEditingMessage] = useState<any | null>(null);
-    const navigate = useNavigate(); // Ініціалізуємо useNavigate
+    const [messages, setMessages] = useState<IMessage[]>([]);
+    const [editingMessage, setEditingMessage] = useState<IMessage | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!currentUser) return;
 
         const q = getMessages(currentUser.uid, receiver.uid);
-        const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<any>) => {
-            const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<any>) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
+        const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot<IMessage>) => {
+            const msgs = snapshot.docs.map((doc: QueryDocumentSnapshot<IMessage>) => {
+                const data = doc.data() as IMessage;
+                return {
+                    ...data,
+                    id: doc.id,
+                };
+            });
             setMessages(msgs);
         });
 
@@ -41,7 +45,7 @@ const Chat: React.FC<ChatProps> = ({ receiver }) => {
         }
     };
 
-    const handleEditMessage = (message: any) => {
+    const handleEditMessage = (message: IMessage) => {
         setEditingMessage(message);
     };
 

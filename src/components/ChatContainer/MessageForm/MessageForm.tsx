@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
+import { IMessage } from '../../../types/Message';
 import { useAuth } from '../../../hooks';
-import {sendMessage} from "../../../services";
+import { sendMessage } from '../../../services';
 import css from './MessageForm.module.css';
 
 interface MessageFormProps {
     receiverId: string;
-    editingMessage?: any;
+    editingMessage?: IMessage | null;
     onUpdateMessage: (id: string, newText: string) => void;
 }
 

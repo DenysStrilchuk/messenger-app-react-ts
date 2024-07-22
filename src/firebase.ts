@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, FirestoreDataConverter, QueryDocumentSnapshot, SnapshotOptions } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+
+import { IMessage } from './types/Message';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -20,8 +22,26 @@ const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storage = getStorage(app);
 
+const messageConverter: FirestoreDataConverter<IMessage> = {
+    toFirestore(message: IMessage): any {
+        return { ...message };
+    },
+    fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): IMessage {
+        const data = snapshot.data(options);
+        return {
+            id: snapshot.id,
+            text: data.text,
+            senderId: data.senderId,
+            receiverId: data.receiverId,
+            fileUrls: data.fileUrls,
+            timestamp: data.timestamp,
+        } as IMessage;
+    },
+};
+
 export {
     auth,
     firestore,
-    storage
+    storage,
+    messageConverter
 };

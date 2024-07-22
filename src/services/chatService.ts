@@ -1,10 +1,12 @@
 import { collection, query, where, orderBy, Query, addDoc, doc, deleteDoc, updateDoc, Timestamp } from 'firebase/firestore';
-import { firestore, storage } from '../firebase';
+import { firestore, storage, messageConverter } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-const getMessages = (senderId: string, receiverId: string): Query => {
+import { IMessage } from '../types/Message';
+
+const getMessages = (senderId: string, receiverId: string): Query<IMessage> => {
     return query(
-        collection(firestore, 'messages'),
+        collection(firestore, 'messages').withConverter(messageConverter),
         where('senderId', 'in', [senderId, receiverId]),
         where('receiverId', 'in', [senderId, receiverId]),
         orderBy('timestamp')
